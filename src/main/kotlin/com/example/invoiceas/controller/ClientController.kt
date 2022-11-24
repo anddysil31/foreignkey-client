@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 
 @RestController
@@ -27,8 +28,8 @@ class ClientController {
     }
 
     @PostMapping
-    fun save(@RequestBody client: Client): Client?{
-        return clientService.save(client)
+    fun save(@RequestBody @Valid client: Client):ResponseEntity<Client>?{
+        return ResponseEntity(clientService.save(client), HttpStatus.ACCEPTED)
 
     }
 
