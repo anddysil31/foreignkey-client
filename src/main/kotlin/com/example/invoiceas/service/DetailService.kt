@@ -29,24 +29,28 @@ class DetailService {
        try{
            invoiceRepository.findById(detail.invoiceId)
                ?:throw Exception("El id ${detail.invoiceId} de factura no existe")
-           return detailRepository.save(detail)
+           val response = detailRepository.save(detail)
            productRepository.findById(detail.productId)
                ?:throw Exception("El id ${detail.productId} de detalle no existe")
+           val actualizateStockProduct = productRepository.findById(response.productId)
+           actualizateStockProduct?.apply{
+               stock = stock?.minus(detail.quantity!!)
+           }
+           productRepository.save(actualizateStockProduct!!)
            return detailRepository.save(detail)
-
        }catch (ex:Exception){
            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
        }
 
-    fun updateStock(product: Product):Product{
-        val logic = productRepository.findById(detail.productId)
-            ?:throw Exception("El id ${detail.productId} de detalle no existe")
-        return productRepository.save(product)
-        logic.apply {
-            stock = product.stock?.minus(detail.quantity!!)
-        }
-        return productRepository.save(logic)
-    }
+//    fun updateStock(product: Product):Product{
+//        val logic = productRepository.findById(detail.productId)
+//            ?:throw Exception("El id ${detail.productId} de detalle no existe")
+//        return productRepository.save(product)
+//        logic.apply {
+//            stock = product.stock?.minus(detail.quantity!!)
+//        }
+//        return productRepository.save(logic)
+//    }
 
 
 
