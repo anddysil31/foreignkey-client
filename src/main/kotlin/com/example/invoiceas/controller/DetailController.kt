@@ -2,7 +2,9 @@ package com.example.invoiceas.controller
 
 
 import com.example.invoiceas.model.Detail
+import com.example.invoiceas.model.Product
 import com.example.invoiceas.service.DetailService
+import com.example.invoiceas.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -30,9 +32,7 @@ class DetailController {
     @PostMapping
     fun save(@RequestBody detail: Detail): Detail?{
         return detailService.save(detail)
-
     }
-
     @PutMapping
     fun update(@RequestBody detail: Detail): ResponseEntity<Detail> {
         return ResponseEntity(detailService.update(detail), HttpStatus.ACCEPTED)

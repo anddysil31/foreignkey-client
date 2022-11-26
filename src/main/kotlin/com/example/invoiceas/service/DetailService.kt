@@ -1,6 +1,7 @@
 package com.example.invoiceas.service
 
 import com.example.invoiceas.model.Detail
+import com.example.invoiceas.model.Product
 import com.example.invoiceas.repository.DetailRepository
 import com.example.invoiceas.repository.InvoiceRepository
 import com.example.invoiceas.repository.ProductRepository
@@ -32,10 +33,20 @@ class DetailService {
            productRepository.findById(detail.productId)
                ?:throw Exception("El id ${detail.productId} de detalle no existe")
            return detailRepository.save(detail)
+
        }catch (ex:Exception){
            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
        }
 
+    fun updateStock(product: Product):Product{
+        val logic = productRepository.findById(detail.productId)
+            ?:throw Exception("El id ${detail.productId} de detalle no existe")
+        return productRepository.save(product)
+        logic.apply {
+            stock = product.stock?.minus(detail.quantity!!)
+        }
+        return productRepository.save(logic)
+    }
 
 
 
