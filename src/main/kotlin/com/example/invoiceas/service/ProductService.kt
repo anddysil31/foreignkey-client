@@ -41,6 +41,7 @@ class ProductService {
             return productRepository.save(product)
             response.apply{
                 stock = product.stock
+                price = product.price
             }
             return productRepository.save(response)
         }

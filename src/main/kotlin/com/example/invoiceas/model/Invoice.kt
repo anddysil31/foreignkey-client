@@ -27,6 +27,7 @@ class Invoice {
     @Column(name="client_id")
     var clientId:Long? = null
 
+
 }
 
 

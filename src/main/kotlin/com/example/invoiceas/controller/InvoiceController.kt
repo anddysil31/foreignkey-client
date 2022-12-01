@@ -33,6 +33,11 @@ class InvoiceController {
         return ResponseEntity(invoiceService.listTotalMoreThan(total), HttpStatus.ACCEPTED)
     }
 
+    @GetMapping("/updatetotal/{invoiceId}")
+    fun listTotals(@PathVariable("invoiceId") invoiceId:Long):ResponseEntity<*>{
+        return ResponseEntity(invoiceService.updateFromDetails(invoiceId), HttpStatus.ACCEPTED)
+    }
+
     @PostMapping
     fun save(@RequestBody invoice: Invoice): Invoice?{
         return invoiceService.save(invoice)

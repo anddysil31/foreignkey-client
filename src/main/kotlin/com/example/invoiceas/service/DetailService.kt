@@ -1,6 +1,7 @@
 package com.example.invoiceas.service
 
 import com.example.invoiceas.model.Detail
+import com.example.invoiceas.model.Invoice
 import com.example.invoiceas.model.Product
 import com.example.invoiceas.repository.DetailRepository
 import com.example.invoiceas.repository.InvoiceRepository
@@ -24,6 +25,9 @@ class DetailService {
     fun list ():List<Detail>{
         return detailRepository.findAll()
     }
+
+
+
 
     fun save (detail: Detail):Detail{
        try{
