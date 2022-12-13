@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 
 @RestController
@@ -33,13 +34,13 @@ class InvoiceController {
         return ResponseEntity(invoiceService.listTotalMoreThan(total), HttpStatus.ACCEPTED)
     }
 
-    @GetMapping("/updatetotal/{invoiceId}")
-    fun listTotals(@PathVariable("invoiceId") invoiceId:Long):ResponseEntity<*>{
-        return ResponseEntity(invoiceService.updateFromDetails(invoiceId), HttpStatus.ACCEPTED)
-    }
+//    @GetMapping("/updatetotal/{invoiceId}")
+//    fun listTotals(@PathVariable("invoiceId") invoiceId:Long):ResponseEntity<*>{
+//        return ResponseEntity(invoiceService.updateFromDetails(invoiceId), HttpStatus.ACCEPTED)
+//    }
 
     @PostMapping
-    fun save(@RequestBody invoice: Invoice): Invoice?{
+    fun save(@RequestBody @Valid invoice: Invoice): Invoice?{
         return invoiceService.save(invoice)
 
     }

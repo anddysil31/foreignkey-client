@@ -36,27 +36,16 @@ class DetailService {
            val response = detailRepository.save(detail)
            productRepository.findById(detail.productId)
                ?:throw Exception("El id ${detail.productId} de detalle no existe")
-           val actualizateStockProduct = productRepository.findById(response.productId)
-           actualizateStockProduct?.apply{
+           val actualizeStockProduct = productRepository.findById(response.productId)!!
+           actualizeStockProduct?.apply {
                stock = stock?.minus(detail.quantity!!)
            }
-           productRepository.save(actualizateStockProduct!!)
-           return detailRepository.save(detail)
+           productRepository.save(actualizeStockProduct!!)
+           calculateAndUpdateTotal(response)
+           return response
        }catch (ex:Exception){
            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
        }
-
-//    fun updateStock(product: Product):Product{
-//        val logic = productRepository.findById(detail.productId)
-//            ?:throw Exception("El id ${detail.productId} de detalle no existe")
-//        return productRepository.save(product)
-//        logic.apply {
-//            stock = product.stock?.minus(detail.quantity!!)
-//        }
-//        return productRepository.save(logic)
-//    }
-
-
 
     }
 
@@ -81,11 +70,23 @@ class DetailService {
             }
             return detailRepository.save(response)
         }
-            catch (ex:Exception){
-            throw  ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
+            catch (ex:Exception) {
+                throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
 
+            }
+    }
+
+    fun calculateAndUpdateTotal (detail: Detail){
+        val totalCalculated = detailRepository.sumTotal(detail.invoiceId)
+        val invoiceResponse = invoiceRepository.findById(detail.invoiceId)
+        invoiceResponse?.apply {
+            total=totalCalculated
         }
+        invoiceRepository.save(invoiceResponse!!)
     }
 }
+
+
+
 
 

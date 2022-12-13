@@ -16,8 +16,10 @@ interface InvoiceRepository:JpaRepository<Invoice, Long> {
     @Query(nativeQuery = true)
     fun findTotalMoreThan(@Param("total") total: Double?):List<Invoice>?
 
-    @Modifying
-    fun updateFromDetails(@Param("invoiceId") invoiceId: Long?): Double?
+//    @Modifying
+//    fun updateFromDetails(@Param("invoiceId") invoiceId: Long?): Double?
+//
+
 }
 
 

@@ -1,5 +1,6 @@
 package com.example.invoiceas.service
 
+import com.example.invoiceas.model.Invoice
 import com.example.invoiceas.model.Product
 import com.example.invoiceas.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,6 +34,10 @@ class ProductService {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
+    fun findStockMinium(stock:Long):List<Product>?{
+        return productRepository.findStockMin(stock)
+    }
+
 
     fun updateTotal(product: Product):Product{
         try{
