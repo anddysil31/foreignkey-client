@@ -20,8 +20,17 @@ class ProductService {
         return productRepository.findAll()
     }
 
-    fun save (product: Product):Product{
-       return productRepository.save(product)
+    fun save (product: Product):Product {
+        try {
+            product.description?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("La descripción no debe ser vacía")
+            product.stock.takeIf { it!! > 0 }
+                ?: throw Exception("El stock debe ser mayor a cero")
+            return productRepository.save(product)
+
+        } catch (ex: Exception) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
+        }
     }
 
     fun update(product: Product):Product{

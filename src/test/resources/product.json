@@ -1,0 +1,7 @@
+{
+  "id": 1,
+  "description": "A soda",
+  "brand": "Pepsi",
+  "stock": 5,
+  "price": 0.5
+}

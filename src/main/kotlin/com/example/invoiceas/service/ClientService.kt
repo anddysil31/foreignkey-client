@@ -40,7 +40,14 @@ class ClientService {
         return true
     }
     fun save (client: Client):Client{
-        return clientRepository.save(client)
+        try {
+            client.fullname?.takeIf { it.trim().isNotEmpty() }
+                ?:throw Exception("fullname no debe ser blanco")
+            return clientRepository.save(client)
+
+        }catch (ex:Exception){
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
+        }
     }
 
     fun update(client: Client):Client{

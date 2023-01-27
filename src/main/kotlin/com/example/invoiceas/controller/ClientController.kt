@@ -28,7 +28,7 @@ class ClientController {
         return ResponseEntity(response, HttpStatus.OK)
     }
 
-    @GetMapping("/client/{id}")
+    @GetMapping("/{id}")
     fun listById(@PathVariable("id") id:Long):ResponseEntity<*>{
     return ResponseEntity(clientService.findClientById(id), HttpStatus.ACCEPTED)
     }
